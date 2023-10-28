@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "kamoa",
+    "name": "Kamoa",
     "slug": "kamoa",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -15,16 +15,19 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "me.kelynnjeri.kamoa"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "me.kelynnjeri.kamoa"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": []
   }
 }
