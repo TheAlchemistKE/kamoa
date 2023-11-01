@@ -1,13 +1,10 @@
 import React, { useState } from "react";
-import {View, Text} from "react-native";
-import {AddTodo} from "../components/AddTodo";
-import {TodoList} from "../components/TodoList";
+import { View, Text } from "react-native";
+
 export const Todo = () => {
-    return (
-        <View>
-            <Text>Todos App</Text>
-            <AddTodo/>
-            <TodoList/>
-        </View>
-    )
-}
+  return (
+    <View>
+      <Text>Todos App</Text>
+    </View>
+  );
+};
