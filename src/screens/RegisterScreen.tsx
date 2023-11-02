@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import * as ImagePicker from "expo-image-picker";
 import * as Yup from "yup";
 import { collection, addDoc, doc, setDoc } from "firebase/firestore";
-import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+} from "firebase/auth";
 import { Formik } from "formik";
 import uploadImage from "../utils/uploadImage";
 import * as uuid from "uuid";
@@ -16,7 +19,7 @@ import {
   Button,
 } from "react-native";
 import { auth, db } from "../config/firebaseConfig";
-import {string} from "yup";
+import { string } from "yup";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
@@ -70,17 +73,18 @@ export default function RegisterScreen({ navigation }: any) {
       password,
     );
 
-    await sendEmailVerification(userCredential.user)
+    await sendEmailVerification(userCredential.user);
 
     // Create User Profile.
-      const [profile] = await Promise.all([setDoc(doc(db, "user_profiles", userCredential.user.uid), {
-          id: userCredential.user.uid,
-          email,
-          fullname,
-          username,
-          avatar,
-      })]);
-
+    const [profile] = await Promise.all([
+      setDoc(doc(db, "user_profiles", userCredential.user.uid), {
+        id: userCredential.user.uid,
+        email,
+        fullname,
+        username,
+        avatar,
+      }),
+    ]);
 
     navigation.navigate("Todo");
   };
@@ -164,6 +168,11 @@ export default function RegisterScreen({ navigation }: any) {
           </>
         )}
       </Formik>
+
+      <View style={styles.call_to_action}>
+        <Text>Already have an account?</Text>
+        <Text style={styles.link} onPress={() => navigation.navigate('Login')}>Login</Text>
+      </View>
     </View>
   );
 }
@@ -189,7 +198,7 @@ const styles = StyleSheet.create({
     marginTop: 40,
   },
   input: {
-    marginVertical: 10,
+    marginVertical: 2,
     width: Dimensions.get("window").width - 50,
 
     height: 40,
@@ -211,4 +220,15 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: "#ffffff",
   },
+  call_to_action: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 10
+  },
+  link: {
+    color: 'blue',
+    paddingLeft: 5,
+  }
 });
