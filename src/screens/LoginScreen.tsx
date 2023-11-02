@@ -99,6 +99,10 @@ export default function LoginScreen({ navigation }: any) {
           </>
         )}
       </Formik>
+      <View style={styles.call_to_action}>
+        <Text>Don't have an account?</Text>
+        <Text style={styles.link} onPress={() => navigation.navigate('Register')}>Register</Text>
+      </View>
     </View>
   );
 }
@@ -146,4 +150,16 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: "#ffffff",
   },
+
+    call_to_action: {
+  display: "flex",
+      flexDirection: "row",
+      justifyContent: "center",
+      alignItems: "center",
+      marginTop: 10
+},
+link: {
+  color: 'blue',
+      paddingLeft: 5,
+}
 });
