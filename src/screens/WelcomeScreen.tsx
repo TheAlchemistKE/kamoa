@@ -11,7 +11,7 @@ export default function WelcomeScreen({ navigation }: any) {
   return (
     <View style={styles.container}>
         <Text style={styles.title}>Welcome To Kamoa Todo</Text>
-      <Image source={require('../../assets/todo.png')} contentFit={'fill'} contentPosition={'center'} fadeDuration={5} style={styles.image}/>
+      <Image source={require('../../assets/todo.png')} contentFit={'fill'} contentPosition={'center'} transition={5} style={styles.image}/>
         <TouchableOpacity
             style={styles.buttonContainer}
             onPress={handleRegisterPress}
