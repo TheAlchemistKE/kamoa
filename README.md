@@ -11,6 +11,8 @@ The solution is in the following technologies:
 - Firebase Authentication
 - Firebase Firestore
 
+### Demo
+![Project Demo](./kamoa.gif)
 
 ### Project Setup
 This project is built in expo. To get setup, do the following:
