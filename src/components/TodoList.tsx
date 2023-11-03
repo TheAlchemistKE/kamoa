@@ -1,104 +1,49 @@
-import React, { useEffect, useState } from "react";
-import { fetchTodos, Todo } from "../api/api";
-import {
-  FlatList,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import Icon from "react-native-vector-icons/Ionicons";
-export default function TodoList() {
-  const [todos, setTodos] = useState<Todo[]>([]);
+import React, { useEffect } from 'react';
+import {View, Text, FlatList, StyleSheet, Dimensions} from 'react-native';
+import { Checkbox, List } from 'react-native-paper'; // Import Checkbox and List from react-native-paper
+import { useSelector, useDispatch } from 'react-redux';
+import {RootState} from "../store/store";
+import {fetchTodos} from "../reducers/todoReducer";
 
-  useEffect(() => {
-    fetchTodos().then((response: any) => {
-      setTodos(response.data);
-    });
-  }, []);
 
-  return (
-    <FlatList
-      data={todos}
-      keyExtractor={(item) => item.id.toString()}
-      renderItem={({ item }) => {
-        return (
-          <TouchableOpacity
-            style={{
-              flexDirection: "row",
-              padding: 10,
-              borderBottomWidth: 1,
-              borderStyle: "solid",
-              borderColor: "#ecf0f1",
-            }}
-            onPress={() => {
-              console.log(item);
-            }}
-          >
-            <View
-              style={{
-                flex: 3,
-                alignItems: "flex-start",
-                justifyContent: "center",
-              }}
-            >
-              {item.completed ? (
-                <Text
-                  style={{
-                    fontWeight: "bold",
-                  }}
-                >{`${item.title} `}</Text>
-              ) : (
-                <Text>{`${item.title}`}</Text>
-              )}
-            </View>
-            <View
-              style={{
-                flex: 1,
-                alignItems: "flex-end",
-                justifyContent: "center",
-              }}
-            >
-              {item.completed ? (
-                <Icon name="ios-checkbox" size={30} color={primaryColor}></Icon>
-              ) : (
-                <Icon
-                  name="ios-square-outline"
-                  size={30}
-                  color={darkGrey}
-                ></Icon>
-              )}
-            </View>
-          </TouchableOpacity>
-        );
-      }}
-    />
-  );
-}
+const TodoList: React.FC = () => {
+    const dispatch = useDispatch();
+    const todos = useSelector((state: RootState) => state.todos.todos);
+    const status = useSelector((state: RootState) => state.todos.status);
 
-const primaryColor = "#1abc9c";
-const lightGrey = "#ecf0f1";
-const darkGrey = "#bdc3c7";
+    useEffect(() => {
+        if (status === 'idle') {
+            dispatch(fetchTodos());
+        }
+    }, [status, dispatch]);
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "white",
-    paddingTop: 20,
-    paddingBottom: 0,
-  },
-  containerFooter: {
-    height: 50,
-    backgroundColor: "#1abc9c",
-    padding: 5,
-    flexDirection: "row",
-  },
-  searchContainer: {
-    flex: 1,
-    padding: 5,
+    if (status === 'loading') {
+        return <Text>Loading...</Text>;
+    }
 
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "#ecf0f1",
-  },
-});
+    if (status === 'failed') {
+        return <Text>Error: An error occurred while fetching data.</Text>;
+    }
+
+    return (
+        <FlatList
+            data={todos}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }) => (
+                <List.Item
+                    title={item.title}
+                    left={() => (
+                        <Checkbox
+                            status={item.completed ? 'checked' : 'unchecked'}
+                            color="blue"
+                        />
+                    )}
+                />
+            )}
+        />
+    );
+};
+
+
+
+export default TodoList;
