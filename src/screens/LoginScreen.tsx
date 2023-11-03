@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import * as Yup from "yup";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { Formik } from "formik";
-import uploadImage from "../utils/uploadImage";
 import {
   View,
   Text,
@@ -10,7 +9,6 @@ import {
   TouchableOpacity,
   Dimensions,
   StyleSheet,
-  Button,
 } from "react-native";
 import { auth, db } from "../config/firebaseConfig";
 
